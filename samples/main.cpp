@@ -562,10 +562,13 @@ static void Keyboard(GLFWwindow* window, int key, int scancode, int action, int 
 	}
 }
 
-static void Reshape(GLFWwindow*, int w, int h)
+static void Reshape(GLFWwindow* window, int w, int h)
 {
-	width = w;
-	height = h > 0 ? h : 1;
+	// width = w;
+	// height = h > 0 ? h : 1;
+
+	int width, height;
+	glfwGetFramebufferSize(window, &width, &height);
 
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
@@ -629,21 +632,7 @@ int main(int, char**)
 	ImGuiIO& io = ImGui::GetIO();
 	io.FontGlobalScale = uiScale;
 
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	
-	float aspect = float(width) / float(height);
-	if (width >= height)
-	{
-		// aspect >= 1, set the height from -1 to 1, with larger width
-		glOrtho(-zoom * aspect, zoom * aspect, -zoom + pan_y, zoom + pan_y, -1.0, 1.0);
-	}
-	else
-	{
-		// aspect < 1, set the width to -1 to 1, with larger height
-		glOrtho(-zoom, zoom, -zoom / aspect + pan_y, zoom / aspect + pan_y, -1.0, 1.0);
-	}
+	Reshape(mainWindow, width, height);
 
 	InitDemo(0);
 
