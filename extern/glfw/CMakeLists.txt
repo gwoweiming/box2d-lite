@@ -85,7 +85,7 @@ elseif (UNIX)
     set(glfw_HEADERS ${glfw_HEADERS} src/linux_joystick.h)
     set(glfw_SOURCES ${glfw_SOURCES} src/linux_joystick.c)
 endif()
-
+add_compile_definitions(glfw _GLFW_USE_CONFIG_H)
 add_library(glfw ${glfw_SOURCES} ${glfw_HEADERS})
 target_include_directories(glfw PUBLIC include)
 target_include_directories(glfw PRIVATE ${glfw_INCLUDE_DIRS})
